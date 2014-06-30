@@ -1,0 +1,73 @@
+- name:          Check rbenv installation
+  shell:         rbenv --version
+  ignore_errors: yes
+  register:      rbenv_installed
+
+- name:          Install rbenv
+  git:           repo=git://github.com/sstephenson/rbenv.git
+                 dest={{ rbenv_root }}
+                 version=v0.4.0
+                 update=no
+  when:          rbenv_installed|failed
+
+- name:          Add rbenv binary to $PATH
+  sudo:          true
+  file:          path=/usr/local/bin/rbenv
+                 src={{ rbenv_root }}/bin/rbenv
+                 state=link
+  when:          rbenv_installed|failed
+
+- name:          Add rbenv initialization script to profile.d
+  sudo:          true
+  template:      src=rbenv.sh.j2
+                 dest=/etc/profile.d/rbenv.sh
+
+- name:          Install ruby_build as rbenv plugin
+  git:           repo=git://github.com/sstephenson/ruby-build.git
+                 dest={{ rbenv_root }}/plugins/ruby-build
+                 update=no
+
+- name:          Check ruby version installation
+  shell:         rbenv versions | grep {{ version }}
+  ignore_errors: yes
+  register:      ruby_version
+
+- name:          Install ruby_build dependencies
+  sudo:          true
+  apt:           pkg={{ item }} state=latest install_recommends=no
+  with_items:
+                 - build-essential
+                 - git
+                 - libcurl4-openssl-dev
+                 - libmysqlclient-dev
+                 - libreadline6-dev
+                 - libssl-dev
+                 - libxml2-dev
+                 - libxslt1-dev
+                 - zlib1g-dev
+
+
+- name:          Install ruby version
+  shell:         rbenv install {{ version }}
+  register:      ruby_installed
+  when:          ruby_version|failed
+
+- name:          Set default ruby version
+  shell:         rbenv global {{ version }}
+  when:          ruby_installed|success and not ruby_installed|skipped
+
+- name:          Set .gemrc
+  copy:          src=gemrc
+                 dest={{ ansible_env.HOME }}/.gemrc
+                 owner={{ ansible_env.USER }}
+                 group={{ ansible_env.USER }}
+                 mode=0644
+
+- name:          Rehash gem binaries
+  shell:         rbenv rehash
+  when:          ruby_installed|success or ruby_installed|skipped
+
+
+- name:          Install headers files for compiling ruby extension modules
+  sudo:          true
+  apt:           pkg=ruby-dev state=latest install-recommends=no

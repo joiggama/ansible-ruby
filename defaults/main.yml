@@ -1,0 +1,2 @@
+rbenv_root: /home/{{ansible_env.USER}}/.rbenv
+version:    2.1.2
