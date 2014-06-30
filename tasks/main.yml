@@ -54,7 +54,7 @@
 
 - name:          Set default ruby version
   shell:         rbenv global {{ version }}
-  when:          ruby_installed|success and not ruby_installed|skipped
+  when:          ruby_installed|success
 
 - name:          Set .gemrc
   copy:          src=gemrc
@@ -65,7 +65,7 @@
 
 - name:          Rehash gem binaries
   shell:         rbenv rehash
-  when:          ruby_installed|success or ruby_installed|skipped
+  when:          ruby_installed|success
 
 
 - name:          Install headers files for compiling ruby extension modules
