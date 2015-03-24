@@ -1,0 +1,15 @@
+- name:  Set default version
+  shell: rbenv global {{default_version}}
+  when:  default_version is defined
+
+- name:  Forbid gem documentation
+  copy:  src=gemrc.yml
+         dest={{ansible_env.HOME}}/.gemrc
+         owner={{ansible_env.USER}}
+         group={{ansible_env.USER}}
+         mode=0644
+  when:  forbid_gem_docs
+
+- name:  Rehash gem binaries
+  shell: rbenv rehash
+  when:  version_installed|changed

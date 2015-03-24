@@ -1,2 +1,11 @@
-rbenv_root: /home/{{ansible_env.USER}}/.rbenv
-version:    2.1.2
+---
+apt_cache_expiration: 3600
+forbid_gem_docs:      true
+install_dependencies: true
+
+rbenv_root:           "/home/{{ansible_env.USER}}/.rbenv"
+rbenv_version:        v0.4.0
+ruby_build_root:      "{{rbenv_root}}/plugins/ruby-build"
+ruby_build_version:   v20150319zf
+
+version:              2.2.0

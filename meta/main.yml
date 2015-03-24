@@ -1,0 +1,22 @@
+---
+galaxy_info:
+  author: Ignacio Galindo
+  description: This ansible role aims to install ruby on ubuntu systems.
+  license: MIT
+  min_ansible_version: 1.2
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - trusty
+  categories:
+    - development
+    - system
+dependencies:
+  - role:    joiggama.rbenv
+    root:    "{{rbenv_root}}"
+    version: "{{rbenv_version}}"
+
+  - role:    joiggama.ruby-build
+    root:    "{{ruby_build_root}}"
+    version: "{{ruby_build_version}}"
