@@ -5,7 +5,6 @@ install_dependencies: true
 
 rbenv_root:           "/home/{{ansible_env.USER}}/.rbenv"
 rbenv_version:        v0.4.0
-ruby_build_root:      "{{rbenv_root}}/plugins/ruby-build"
-ruby_build_version:   v20150319zf
-
-version:              2.2.0
+ruby_build_root:      "/home/{{ansible_env.USER}}/.rbenv/plugins/ruby-build"
+ruby_build_version:   v20151216
+ruby_version:         2.2.3

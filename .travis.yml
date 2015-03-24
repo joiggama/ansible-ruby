@@ -1,0 +1,22 @@
+language: python
+python: '2.7'
+before_install:
+- sudo apt-get update -qq &> /dev/null
+- pip install --upgrade pip &> /dev/null
+- pip install ansible &> /dev/null
+install:
+- ansible-galaxy install joiggama.rbenv -p test
+- ansible-galaxy install joiggama.ruby-build -p test
+- mv test/ansible.cfg.example ansible.cfg
+script:
+- ansible-playbook -i test/inventory test/travis.yml --syntax-check
+- ansible-playbook -i test/inventory test/travis.yml --connection=local --sudo
+- >
+  ansible-playbook -i test/inventory test/travis.yml --connection=local --sudo
+  | grep -q "changed=3.*failed=0"
+  && (echo "Idempotence test: pass" && exit 0)
+  || (echo "Idempotence test: fail" && exit 1)
+notifications:
+  webhooks:
+    urls:
+      secure: ST1uCWq/6pte2Xdm1welt25arNFE9FPK+Q83e810LoiL5wcOFQtk99La/h5zbO/f3LmqpE30hj6ZX/vjFR8zqOs02rJKOxdbegU90wlC3guvcDIyNrVcNq4I5CkwNMEEGhBIbNZL+Vd8jaU744p6OEMBZIyg3ZmhmCr/uqY6/MQ=
