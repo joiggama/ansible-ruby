@@ -11,17 +11,17 @@ None.
 Role Variables
 --------------
 
-| Name                 | Default                           |                                             |
-|:--------------------:|:---------------------------------:|:-------------------------------------------:|
-| apt_cache_expiration | 3600                              | Update apt cache window in seconds          |
-| default_ruby_version |                                   | Default ruby version (rbenv global)         |
-| forbid_gem_docs      | true                              | Wheter or not to install gem docs           |
-| install_dependencies | true                              | Whether or not to install dependencies      |
-| rbenv_root           | /home/{{ansible_env.USER}}/.rbenv | Install path for rbenv                      |
-| rbenv_version        | v0.4.0                            | Install version of rbenv                    |
-| ruby_build_root      | {{rbenv_root}}/plugins/ruby-build | Install path for rbenv                      |
-| ruby_build_version   | v20151028                         | Install version of ruby-build               |
-| ruby_version         | 2.2.3                             | Ruby version to install (ruby-build format) |
+| Name                      | Default                             |                                             |
+|:-------------------------:|:-----------------------------------:|:-------------------------------------------:|
+| ruby_apt_cache_expiration | 3600                                | Update apt cache window in seconds          |
+| ruby_default_version      |                                     | Default ruby version (rbenv global)         |
+| ruby_forbid_gem_docs      | true                                | Wheter or not to install gem docs           |
+| ruby_install_dependencies | true                                | Whether or not to install dependencies      |
+| rbenv_root                | /home/{{ ansible_env.USER }}/.rbenv | Install path for rbenv                      |
+| rbenv_version             | master                              | Install version of rbenv                    |
+| ruby_build_root           | {{ rbenv_root }}/plugins/ruby-build | Install path for rbenv                      |
+| ruby_build_version        | master                              | Install version of ruby-build               |
+| ruby_version              | 2.2.3                               | Ruby version to install (ruby-build format) |
 
 **NOTE:** Some of these defaults require facts to be gathered.
 
@@ -40,7 +40,7 @@ Example Playbook
 - gather_facts: true
   hosts:        all
   roles:
-                - ansible-ruby
+    - ansible-ruby
 ```
 
 License

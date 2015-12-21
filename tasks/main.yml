@@ -1,11 +1,11 @@
-- name:          Check version installation
+- name:          Check installed ruby versions
   shell:         rbenv versions | grep {{ ruby_version }}
   ignore_errors: yes
-  register:      version_already_installed
+  register:      ruby_version_already_installed
 
-- name:          Install version
+- name:          Install ruby version
   shell:         rbenv install {{ ruby_version }}
-  register:      version_installed
-  when:          version_already_installed|failed
+  register:      ruby_version_installed
+  when:          ruby_version_already_installed|failed
 
 - include: extras.yml
