@@ -4,6 +4,8 @@ ruby
 [![travis](https://travis-ci.org/joiggama/ansible-ruby.svg?branch=master)](https://travis-ci.org/joiggama/ansible-ruby)
 [![gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/joiggama/ansible-ruby)
 
+[![Join the chat at https://gitter.im/joiggama/ansible-ruby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/joiggama/ansible-ruby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This ansible role aims to install ruby on ubuntu systems.
 
 Requirements
